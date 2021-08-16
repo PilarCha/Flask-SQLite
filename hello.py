@@ -10,12 +10,9 @@ app = Flask(__name__)
 def main():
     return render_template("main.html")
 
-@app.route("/", method = ["POST"])
+@app.route("/", methods = ["POST"])
 def phonebook():
     name = request.form["Name"]
     phonenumber = request.form["Phonenumber"]
     connection = sqlite3.connect(currentdirectory + "\phonebook.db")
     cursor = connection.cursor()
-
-if __name__ == "__main__":
-    app.run()
