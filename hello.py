@@ -5,6 +5,8 @@ import os
 currentdirectory = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__)
+# reloads templates on every change
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.route("/")
 def main():
