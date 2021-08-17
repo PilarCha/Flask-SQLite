@@ -34,10 +34,10 @@ def adduser():
     phonenumber = request.form["Phonenumber"]
     # open up the database connection
     cursor = get_db().cursor()
-    query1 = "INSERT INTO Phonebook VALUES({n},{pnm})".format(n=name,pnm = phonenumber)
-    print(query1)
-    cursor.execute(query1)
-    cursor.commit()
+    query1 = "INSERT INTO Phonebook (Name,Phone) VALUES('{n}',{pnm})".format(n=name,pnm = phonenumber)
+    print("the error can be found here " + query1)
+    get_db().execute(query1)
+    get_db().commit()
 
 @app.route("/resultpage", methods = ["GET"])
 def resultpage():
