@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request , url_for, g
+from flask import Flask, render_template, request , g
 import sqlite3
 import os
 # this will store the directory of this specific file in a variable
@@ -38,6 +38,7 @@ def adduser():
     print("the error can be found here " + query1)
     get_db().execute(query1)
     get_db().commit()
+
 
 @app.route("/resultpage", methods = ["GET"])
 def resultpage():
