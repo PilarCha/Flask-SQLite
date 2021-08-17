@@ -4,7 +4,7 @@ import os
 # this will store the directory of this specific file in a variable
 currentdirectory = os.path.dirname(os.path.abspath(__file__))
 
-DATABASE = 'C:\sqlite'
+DATABASE = 'C:\sqlite\Phonebook.db'
 
 app = Flask(__name__)
 
@@ -12,6 +12,17 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 # make sure you could connect to database check
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+    return db
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
 
 @app.route("/")
 def main():
@@ -21,11 +32,12 @@ def main():
 def adduser():
     name = request.form["Name"]
     phonenumber = request.form["Phonenumber"]
-    connection = sqlite3.connect(currentdirectory + "\phonebook.db")
-    cursor = connection.cursor()
+    # open up the database connection
+    cursor = get_db().cursor()
     query1 = "INSERT INTO Phonebook VALUES({n},{pnm})".format(n=name,pnm = phonenumber)
+    print(query1)
     cursor.execute(query1)
-    connection.commit()
+    cursor.commit()
 
 @app.route("/resultpage", methods = ["GET"])
 def resultpage():
