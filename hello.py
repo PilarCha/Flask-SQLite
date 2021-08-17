@@ -1,13 +1,17 @@
-from flask import Flask, render_template, request , url_for
+from flask import Flask, render_template, request , url_for, g
 import sqlite3
 import os
 # this will store the directory of this specific file in a variable
 currentdirectory = os.path.dirname(os.path.abspath(__file__))
 
+DATABASE = 'C:\sqlite'
+
 app = Flask(__name__)
 
 # reloads templates on every change
 app.config['TEMPLATES_AUTO_RELOAD'] = True
+
+# make sure you could connect to database check
 
 @app.route("/")
 def main():
